@@ -1,0 +1,147 @@
+{
+  "info": {
+    "_postman_id": "bitespeed-identity-tests",
+    "name": "Bitespeed Identity Reconciliation",
+    "description": "Test scenarios for identity reconciliation logic",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1️⃣ New User (no match)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"newuser@example.com\",\n  \"phoneNumber\": \"9999999991\"\n}"
+        },
+        "url": {
+          "raw": "https://bitespeed-backend-rsm7.onrender.com/identify",
+          "protocol": "https",
+          "host": ["bitespeed-backend-rsm7", "onrender", "com"],
+          "path": ["identify"]
+        }
+      }
+    },
+    {
+      "name": "2️⃣ Match by phone only",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"phoneNumber\": \"9999999991\"\n}"
+        },
+        "url": {
+          "raw": "https://bitespeed-backend-rsm7.onrender.com/identify",
+          "protocol": "https",
+          "host": ["bitespeed-backend-rsm7", "onrender", "com"],
+          "path": ["identify"]
+        }
+      }
+    },
+    {
+      "name": "3️⃣ Match by email only",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"newuser@example.com\"\n}"
+        },
+        "url": {
+          "raw": "https://bitespeed-backend-rsm7.onrender.com/identify",
+          "protocol": "https",
+          "host": ["bitespeed-backend-rsm7", "onrender", "com"],
+          "path": ["identify"]
+        }
+      }
+    },
+    {
+      "name": "4️⃣ Match by both email & phone (merge)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"newuser@example.com\",\n  \"phoneNumber\": \"9999999991\"\n}"
+        },
+        "url": {
+          "raw": "https://bitespeed-backend-rsm7.onrender.com/identify",
+          "protocol": "https",
+          "host": ["bitespeed-backend-rsm7", "onrender", "com"],
+          "path": ["identify"]
+        }
+      }
+    },
+    {
+      "name": "5️⃣ Email exists, phone new → secondary created",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"newuser@example.com\",\n  \"phoneNumber\": \"8888888888\"\n}"
+        },
+        "url": {
+          "raw": "https://bitespeed-backend-rsm7.onrender.com/identify",
+          "protocol": "https",
+          "host": ["bitespeed-backend-rsm7", "onrender", "com"],
+          "path": ["identify"]
+        }
+      }
+    },
+    {
+      "name": "6️⃣ Two primaries linked → newer downgraded",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"older@example.com\",\n  \"phoneNumber\": \"7777777777\"\n}"
+        },
+        "url": {
+          "raw": "https://bitespeed-backend-rsm7.onrender.com/identify",
+          "protocol": "https",
+          "host": ["bitespeed-backend-rsm7", "onrender", "com"],
+          "path": ["identify"]
+        }
+      }
+    },
+    {
+      "name": "7️⃣ Final merge all",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"older@example.com\",\n  \"phoneNumber\": \"8888888888\"\n}"
+        },
+        "url": {
+          "raw": "https://bitespeed-backend-rsm7.onrender.com/identify",
+          "protocol": "https",
+          "host": ["bitespeed-backend-rsm7", "onrender", "com"],
+          "path": ["identify"]
+        }
+      }
+    },
+    {
+      "name": "8️⃣ Duplicate request (no new insert)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"older@example.com\",\n  \"phoneNumber\": \"8888888888\"\n}"
+        },
+        "url": {
+          "raw": "https://bitespeed-backend-rsm7.onrender.com/identify",
+          "protocol": "https",
+          "host": ["bitespeed-backend-rsm7", "onrender", "com"],
+          "path": ["identify"]
+        }
+      }
+    }
+  ]
+}
+
